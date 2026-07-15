@@ -1,20 +1,20 @@
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 
-const app = express()
+const app = express();
 
 app.use(
   cors({
     origin: "http://localhost:3000", // Next.js frontend
     credentials: true,
   })
-)
+);
 
-app.use(express.json())
+app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => {
-  res.send(`API is running on ${process.env.PORT}...`)
-})
+  res.send(`API is running on ${process.env.PORT}...`);
+});
 
-export default app
+export default app;
