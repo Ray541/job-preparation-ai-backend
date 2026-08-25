@@ -106,6 +106,74 @@ export const logInController = catchAsync(
   }
 );
 
+export const getUserPreferencesController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { user } = req;
+
+    // Check if user exists
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    const data = user.preferences;
+    console.log("data", data);
+
+    return successResponse(
+      res,
+      200,
+      "User preferences fetched successfully",
+      data
+    );
+  }
+);
+
+export const updateUserPreferencesController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { user } = req;
+    const { theme } = req.body;
+
+    // Check if user exists
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    // Validate preferences
+    if (!theme) {
+      throw new AppError("Theme is required", 400);
+    }
+
+    // Update preferences
+    user.preferences.theme = theme;
+    await user.save();
+
+    // Prepare response data
+    const data = user.preferences;
+
+    return successResponse(
+      res,
+      200,
+      "User preferences updated successfully",
+      data
+    );
+  }
+);
+
+export const getMeController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { user } = req;
+
+    // Check if user exists
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    const data = user;
+    console.log(data);
+
+    return successResponse(res, 200, "User fetched successfully", data);
+  }
+);
+
 export const logOutController = catchAsync(
   async (req: Request, res: Response) => {
     // Delete Cookie

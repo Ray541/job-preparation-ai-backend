@@ -7,6 +7,9 @@ export interface Iuser extends Document {
   fullName?: string;
   avatarUrl?: string;
   emailVerified?: boolean;
+  preferences?: {
+    theme?: "light" | "dark" | "system";
+  };
 }
 
 const userSchema = new Schema(
@@ -32,6 +35,13 @@ const userSchema = new Schema(
     emailVerified: {
       type: Boolean,
       default: false,
+    },
+    preferences: {
+      theme: {
+        type: String,
+        enum: ["light", "dark", "system"],
+        default: "system",
+      },
     },
   },
   {
